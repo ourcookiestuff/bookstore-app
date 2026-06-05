@@ -5,6 +5,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuthStore } from '../store/authStore';
 import { login, register } from '../api/authApi';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
 
 const schema = z.object({
   email: z.string().email('Nieprawidłowy email'),
@@ -37,35 +40,12 @@ export default function AuthPage() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'var(--color-cream)',
-    }}>
-      <div style={{
-        display: 'flex',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        border: '0.5px solid var(--color-brown-light)',
-        width: '600px',
-        boxShadow: '0 4px 24px rgba(56,33,16,0.08)',
-      }}>
+    <div className="min-h-screen bg-[#f4f1ea] flex items-center justify-center">
+      <div className="flex rounded-xl overflow-hidden border border-[#c9b99a] w-[620px] shadow-sm">
 
         {/* Lewa strona */}
-        <div style={{
-          background: 'var(--color-brown-dark)',
-          width: '200px',
-          flexShrink: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem 1.5rem',
-          gap: '1.5rem',
-        }}>
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-end' }}>
+        <div className="bg-[#382110] w-60 flex-shrink-0 flex flex-col items-center justify-center gap-6 p-8">
+          <div className="flex gap-1.5 items-end">
             {[
               { w: 18, h: 60, bg: '#8b6343' },
               { w: 14, h: 72, bg: '#c9945a' },
@@ -73,127 +53,98 @@ export default function AuthPage() {
               { w: 12, h: 68, bg: '#a07040' },
               { w: 16, h: 50, bg: '#e8c99a' },
             ].map((b, i) => (
-              <div key={i} style={{
-                width: b.w, height: b.h,
-                background: b.bg,
-                borderRadius: '2px',
-              }} />
+              <div
+                key={i}
+                style={{ width: b.w, height: b.h, background: b.bg }}
+                className="rounded-sm"
+              />
             ))}
           </div>
-          <div style={{ color: '#f4f1ea', fontSize: '20px', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
-            BookStore
-            <div style={{ color: '#e8d5b7', fontSize: '12px', fontWeight: 400, marginTop: '6px' }}>
+          <div className="text-center">
+            <p className="text-[#f4f1ea] text-xl font-medium">BookStore</p>
+            <p className="text-[#c9b99a] text-xs mt-1 leading-relaxed">
               Twoja osobista biblioteka i księgarnia
-            </div>
+            </p>
           </div>
         </div>
 
         {/* Prawa strona */}
-        <div
-          style={{
-            background: 'var(--color-cream)',
-            flex: 1,
-            padding: '2rem 1.75rem',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '320px',
-            }}
-          >
+        <div className="bg-[#f4f1ea] flex-1 p-8">
+
           {/* Taby */}
-          <div style={{ display: 'flex', borderBottom: '2px solid var(--color-brown-light)', marginBottom: '1.5rem' }}>
+          <div className="flex border-b-2 border-[#c9b99a] mb-6">
             {(['login', 'register'] as const).map((m) => (
               <button
                 key={m}
                 onClick={() => { setMode(m); setError(null); }}
-                style={{
-                  flex: 1,
-                  padding: '8px 20px',
-                  fontSize: '14px',
-                  background: 'none',
-                  border: 'none',
-                  borderBottom: mode === m ? '2px solid var(--color-brown-dark)' : '2px solid transparent',
-                  marginBottom: '-2px',
-                  color: mode === m ? 'var(--color-brown-dark)' : 'var(--color-brown-mid)',
-                  fontWeight: mode === m ? 500 : 400,
-                  cursor: 'pointer',
-                }}
+                className={`flex-1 py-2 text-sm border-b-2 -mb-0.5 transition-colors cursor-pointer bg-transparent ${
+                  mode === m
+                    ? 'border-[#382110] text-[#382110] font-medium'
+                    : 'border-transparent text-[#7a6248] hover:text-[#382110]'
+                }`}
               >
                 {m === 'login' ? 'Zaloguj się' : 'Zarejestruj się'}
               </button>
             ))}
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
             {/* Email */}
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '11px', color: 'var(--color-brown-mid)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-xs text-[#7a6248] uppercase tracking-wider">
                 Adres email
-              </label>
-              <input
+              </Label>
+              <Input
+                id="email"
                 {...formRegister('email')}
-                type="email"
                 placeholder="jan@example.com"
-                style={{
-                  width: '100%', padding: '9px',
-                  boxSizing: 'border-box',
-                  border: `1px solid ${errors.email ? '#c0392b' : 'var(--color-brown-light)'}`,
-                  borderRadius: '4px', background: '#fff',
-                  fontSize: '14px', color: 'var(--color-brown-dark)', outline: 'none',
-                }}
+                className={`bg-white text-[#382110] border-[#c9b99a] focus-visible:ring-[#382110] ${
+                  errors.email ? 'border-red-400' : ''
+                }`}
               />
-              {errors.email && <p style={{ color: '#c0392b', fontSize: '12px', marginTop: '3px' }}>{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-xs">{errors.email.message}</p>
+              )}
             </div>
 
             {/* Hasło */}
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '11px', color: 'var(--color-brown-mid)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div className="space-y-1.5">
+              <Label htmlFor="password" className="text-xs text-[#7a6248] uppercase tracking-wider">
                 Hasło
-              </label>
-              <input
+              </Label>
+              <Input
+                id="password"
                 {...formRegister('password')}
                 type="password"
                 placeholder="••••••••"
-                style={{
-                  width: '100%', padding: '9px',
-                  boxSizing: 'border-box',
-                  border: `1px solid ${errors.password ? '#c0392b' : 'var(--color-brown-light)'}`,
-                  borderRadius: '4px', background: '#fff',
-                  fontSize: '14px', color: 'var(--color-brown-dark)', outline: 'none',
-                }}
+                className={`bg-white text-[#382110] border-[#c9b99a] focus-visible:ring-[#382110] ${
+                  errors.password ? 'border-red-400' : ''
+                }`}
               />
-              {errors.password && <p style={{ color: '#c0392b', fontSize: '12px', marginTop: '3px' }}>{errors.password.message}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-xs">{errors.password.message}</p>
+              )}
             </div>
 
             {error && (
-              <p style={{ color: '#c0392b', fontSize: '13px', marginBottom: '0.75rem', textAlign: 'center' }}>{error}</p>
+              <p className="text-red-500 text-sm text-center">{error}</p>
             )}
 
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              style={{
-                width: '100%', padding: '10px',
-                background: 'var(--color-brown-dark)',
-                color: 'var(--color-cream)',
-                border: 'none', borderRadius: '4px',
-                fontSize: '14px', fontWeight: 500,
-                cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                opacity: isSubmitting ? 0.7 : 1,
-              }}
+              className="w-full bg-[#382110] hover:bg-[#5c3d1e] text-[#f4f1ea] cursor-pointer"
             >
-              {isSubmitting ? 'Ładowanie...' : mode === 'login' ? 'Zaloguj się' : 'Zarejestruj się'}
-            </button>
+              {isSubmitting
+                ? 'Ładowanie...'
+                : mode === 'login' ? 'Zaloguj się' : 'Zarejestruj się'}
+            </Button>
           </form>
 
-          <p style={{ fontSize: '11px', color: 'var(--color-brown-mid)', textAlign: 'center', marginTop: '1.25rem' }}>
+          <p className="text-xs text-[#7a6248] text-center mt-4">
             Rejestrując się, akceptujesz regulamin serwisu.
           </p>
-        </div>
         </div>
       </div>
     </div>
