@@ -1,0 +1,9 @@
+INSERT INTO books (title, author, description, price, cover_image_url, isbn, genre, pages, stock) VALUES
+('Wiedźmin: Ostatnie życzenie', 'Andrzej Sapkowski', 'Zbiór opowiadań o wiedźminie Geralcie z Rivii.', 39.99, 'https://covers.openlibrary.org/b/isbn/9788373198005-L.jpg', '9788373198005', 'Fantasy', 288, 15),
+('Solaris', 'Stanisław Lem', 'Powieść science-fiction o kontakcie z obcą cywilizacją.', 34.99, 'https://covers.openlibrary.org/b/isbn/9788308060452-L.jpg', '9788308060452', 'Science Fiction', 264, 10),
+('Pan Tadeusz', 'Adam Mickiewicz', 'Epopeja narodowa, arcydzieło polskiej literatury romantycznej.', 24.99, 'https://covers.openlibrary.org/b/isbn/9788373275942-L.jpg', '9788373275942', 'Klasyka', 384, 20),
+('Zbrodnia i kara', 'Fiodor Dostojewski', 'Powieść psychologiczna o zbrodni i jej konsekwencjach.', 44.99, 'https://covers.openlibrary.org/b/isbn/9788308060445-L.jpg', '9788308060445', 'Klasyka', 640, 8),
+('Dune', 'Frank Herbert', 'Epicka powieść science-fiction osadzona na pustynnej planecie Arrakis.', 49.99, 'https://covers.openlibrary.org/b/isbn/9780441013593-L.jpg', '9780441013593', 'Science Fiction', 688, 12),
+('Harry Potter i Kamień Filozoficzny', 'J.K. Rowling', 'Pierwsza część przygód młodego czarodzieja Harry''ego Pottera.', 39.99, 'https://covers.openlibrary.org/b/isbn/9788372780638-L.jpg', '9788372780638', 'Fantasy', 328, 25),
+('1984', 'George Orwell', 'Dystopijska powieść o totalitarnym społeczeństwie pod kontrolą Wielkiego Brata.', 29.99, 'https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg', '9780451524935', 'Dystopia', 328, 18),
+('Mały Książę', 'Antoine de Saint-Exupéry', 'Poetycka opowieść o małym księciu podróżującym przez wszechświat.', 19.99, 'https://covers.openlibrary.org/b/isbn/9788373277243-L.jpg', '9788373277243', 'Klasyka', 112, 30);
