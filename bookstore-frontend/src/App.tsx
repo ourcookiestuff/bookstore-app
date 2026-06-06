@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthPage from './pages/AuthPage';
 import CatalogPage from './pages/CatalogPage';
+import BookDetailPage from './pages/BookDetailPage';
 import { useAuthStore } from './store/authStore';
 
 const queryClient = new QueryClient();
@@ -20,6 +21,11 @@ export default function App() {
           <Route path="/" element={
             <ProtectedRoute>
               <CatalogPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/books/:id" element={
+            <ProtectedRoute>
+              <BookDetailPage />
             </ProtectedRoute>
           } />
         </Routes>
