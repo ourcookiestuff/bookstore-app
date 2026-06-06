@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import type { BookResponse } from '../../types';
 import { Badge } from '../ui/badge';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addToCart } from '../../api/cartApi';
 
 interface Props {
   book: BookResponse;
@@ -8,6 +10,13 @@ interface Props {
 
 export default function BookCard({ book }: Props) {
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
+  const cartMutation = useMutation({
+    mutationFn: () => addToCart(book.id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+  });
 
   return (
     <div
@@ -34,10 +43,11 @@ export default function BookCard({ book }: Props) {
         {/* Overlay przy hover z przyciskiem */}
         <div className="absolute inset-0 bg-[#382110]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
           <button
-            onClick={(e) => e.stopPropagation()}
-            className="w-full py-2 bg-[#f4f1ea] text-[#382110] text-xs font-medium rounded hover:bg-white transition-colors cursor-pointer"
+            onClick={(e) => { e.stopPropagation(); cartMutation.mutate(); }}
+            disabled={cartMutation.isPending}
+            className="px-3 py-1 bg-[#382110] text-[#f4f1ea] text-xs rounded hover:bg-[#5c3d1e] transition-colors cursor-pointer disabled:opacity-60"
           >
-            Do koszyka
+            {cartMutation.isPending ? '...' : 'Do koszyka'}
           </button>
         </div>
       </div>

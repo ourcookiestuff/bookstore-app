@@ -1,10 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { Button } from "../ui/button";
+import { useQuery } from '@tanstack/react-query';
+import { getCart } from '../../api/cartApi';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const logout = useAuthStore((s) => s.logout);
+
+  const { data: cartItems = [] } = useQuery({
+    queryKey: ['cart'],
+    queryFn: getCart,
+  });
+
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <nav className="bg-[#faf8f6] h-14 px-6 flex items-center justify-between">
@@ -18,21 +27,25 @@ export default function Navbar() {
         <Button
           onClick={() => navigate('/shelf')}
           variant="ghost"
-          className="text-[#c9b99a] text-sm hover:text-[#f4f1ea] transition-colors"
+          className="text-[#c9b99a] text-sm cursor-pointer hover:text-[#f4f1ea] transition-colors"
         >
           Moja półka
         </Button>
         <Button
           onClick={() => navigate('/cart')}
           variant="ghost"
-          className="text-[#c9b99a] text-sm hover:text-[#f4f1ea] transition-colors"
+          className="text-[#c9b99a] text-sm cursor-pointer hover:text-[#f4f1ea] transition-colors"
         >
-          Koszyk
+          Koszyk {cartCount > 0 && (
+            <span className="bg-[#c9945a] text-[#382110] text-xs font-medium px-1.5 py-0.5 rounded-full">
+              {cartCount}
+            </span>
+          )}
         </Button>
         <Button
           onClick={() => { logout(); navigate('/auth'); }}
           variant="ghost"
-          className="text-[#c9b99a] text-sm hover:text-[#f4f1ea] transition-colors"
+          className="text-[#c9b99a] text-sm cursor-pointer hover:text-[#f4f1ea] transition-colors"
         >
           Wyloguj
         </Button>

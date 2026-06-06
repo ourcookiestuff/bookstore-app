@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthPage from './pages/AuthPage';
 import CatalogPage from './pages/CatalogPage';
 import BookDetailPage from './pages/BookDetailPage';
+import CartPage from './pages/CartPage';
 import { useAuthStore } from './store/authStore';
 
 const queryClient = new QueryClient();
@@ -26,6 +27,11 @@ export default function App() {
           <Route path="/books/:id" element={
             <ProtectedRoute>
               <BookDetailPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <CartPage />
             </ProtectedRoute>
           } />
         </Routes>

@@ -21,3 +21,14 @@ export interface Page<T> {
   first: boolean;
   last: boolean;
 }
+
+export interface CartItemResponse {
+  id: number;
+  bookId: number;
+  title: string;
+  author: string;
+  coverImageUrl: string;
+  price: number;
+  quantity: number;
+  subtotal: number;
+}

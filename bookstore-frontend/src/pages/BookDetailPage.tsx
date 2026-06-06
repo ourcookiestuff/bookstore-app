@@ -4,10 +4,19 @@ import { getBook } from '../api/bookApi';
 import Navbar from '../components/common/Navbar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { addToCart } from '../api/cartApi';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function BookDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
+  const cartMutation = useMutation({
+    mutationFn: () => addToCart(book!.id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+  });
 
   const { data: book, isLoading } = useQuery({
     queryKey: ['book', id],
@@ -121,10 +130,11 @@ export default function BookDetailPage() {
                 {book.price.toFixed(2)} zł
               </span>
               <Button
-                disabled={book.stock === 0}
+                disabled={book.stock === 0 || cartMutation.isPending}
+                onClick={() => cartMutation.mutate()}
                 className="bg-[#382110] hover:bg-[#5c3d1e] text-[#f4f1ea] cursor-pointer px-8"
               >
-                Do koszyka
+                {cartMutation.isPending ? 'Dodawanie...' : 'Do koszyka'}
               </Button>
             </div>
           </div>
