@@ -4,6 +4,8 @@ import AuthPage from './pages/AuthPage';
 import CatalogPage from './pages/CatalogPage';
 import BookDetailPage from './pages/BookDetailPage';
 import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import { useAuthStore } from './store/authStore';
 
 const queryClient = new QueryClient();
@@ -32,6 +34,16 @@ export default function App() {
           <Route path="/cart" element={
             <ProtectedRoute>
               <CartPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders/:id" element={
+            <ProtectedRoute>
+              <OrderConfirmationPage />
             </ProtectedRoute>
           } />
         </Routes>
