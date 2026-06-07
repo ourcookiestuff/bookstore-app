@@ -21,7 +21,7 @@ public class ApplicationConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return email -> userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Nie znaleziono użytkownika"));
     }
 
     @Bean
