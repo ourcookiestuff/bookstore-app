@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getOrder } from '../api/orderApi';
 import Navbar from '../components/common/Navbar';
 import { Button } from '@/components/ui/button';
+import Footer from '../components/common/Footer';
 
 export default function OrderConfirmationPage() {
   const { id } = useParams();
@@ -101,6 +102,7 @@ export default function OrderConfirmationPage() {
           </Button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

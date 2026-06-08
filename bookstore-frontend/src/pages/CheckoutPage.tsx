@@ -9,6 +9,7 @@ import Navbar from '../components/common/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import Footer from '../components/common/Footer';
 
 const schema = z.object({
   cardholderName: z.string().min(3, 'Podaj imię i nazwisko'),
@@ -224,6 +225,7 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

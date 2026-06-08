@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCart, updateQuantity, removeFromCart, clearCart } from '../api/cartApi';
 import Navbar from '../components/common/Navbar';
 import { Button } from '@/components/ui/button';
+import Footer from '../components/common/Footer';
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -172,6 +173,7 @@ export default function CartPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

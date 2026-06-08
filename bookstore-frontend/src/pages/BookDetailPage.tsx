@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { addToCart } from '../api/cartApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Footer from '../components/common/Footer';
 
 export default function BookDetailPage() {
   const { id } = useParams();
@@ -140,6 +141,7 @@ export default function BookDetailPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

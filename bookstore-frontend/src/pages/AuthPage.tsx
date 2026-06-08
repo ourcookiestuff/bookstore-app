@@ -20,6 +20,7 @@ export default function AuthPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [error, setError] = useState<string | null>(null);
   const setToken = useAuthStore((s) => s.setToken);
+  const setEmail = useAuthStore((s) => s.setEmail);
   const navigate = useNavigate();
 
   const { register: formRegister, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
@@ -33,6 +34,7 @@ export default function AuthPage() {
         ? await login(data)
         : await register(data);
       setToken(response.token);
+      setEmail(data.email);
       navigate('/');
     } catch (e: any) {
       setError(e.response?.data?.message || 'Coś poszło nie tak');

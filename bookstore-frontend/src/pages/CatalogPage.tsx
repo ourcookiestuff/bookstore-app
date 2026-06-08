@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import Footer from '../components/common/Footer';
 
 const GENRES = ['Fantasy', 'Science Fiction', 'Klasyka', 'Dystopia'];
 
@@ -188,6 +189,7 @@ export default function CatalogPage() {
           </main>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
