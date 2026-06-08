@@ -15,6 +15,9 @@ const schema = z.object({
   cardNumber: z.string().regex(/^\d{16}$/, 'Numer karty musi mieć 16 cyfr'),
   expiryDate: z.string().regex(/^\d{2}\/\d{2}$/, 'Format: MM/RR'),
   cvv: z.string().regex(/^\d{3}$/, 'CVV musi mieć 3 cyfry'),
+  street: z.string().min(3, 'Podaj ulicę'),
+  city: z.string().min(2, 'Podaj miasto'),
+  postalCode: z.string().regex(/^\d{2}-\d{3}$/, 'Format: XX-XXX'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -90,7 +93,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="flex-1 space-y-1.5">
+                  <div className="w-32 space-y-1.5">
                     <Label className="text-xs text-[#7a6248] uppercase tracking-wider">
                       Data ważności
                     </Label>
@@ -120,10 +123,59 @@ export default function CheckoutPage() {
                     )}
                   </div>
                 </div>
+                <div className="border-t border-[#c9b99a] pt-4 mt-2">
+                    <h3 className="font-medium text-[#382110] mb-4">Adres dostawy</h3>
+
+                    <div className="space-y-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs text-[#7a6248] uppercase tracking-wider">
+                          Ulica i numer
+                        </Label>
+                        <Input
+                          {...register('street')}
+                          placeholder="ul. Kwiatowa 15/3"
+                          className="bg-white border-[#c9b99a] text-[#382110] focus-visible:ring-[#382110]"
+                        />
+                        {errors.street && (
+                          <p className="text-red-500 text-xs">{errors.street.message}</p>
+                        )}
+                      </div>
+
+                      <div className="flex gap-4">
+                        <div className="flex-1 space-y-1.5">
+                          <Label className="text-xs text-[#7a6248] uppercase tracking-wider">
+                            Miasto
+                          </Label>
+                          <Input
+                            {...register('city')}
+                            placeholder="Kraków"
+                            className="bg-white border-[#c9b99a] text-[#382110] focus-visible:ring-[#382110]"
+                          />
+                          {errors.city && (
+                            <p className="text-red-500 text-xs">{errors.city.message}</p>
+                          )}
+                        </div>
+                        <div className="w-36 space-y-1.5">
+                          <Label className="text-xs text-[#7a6248] uppercase tracking-wider">
+                            Kod pocztowy
+                          </Label>
+                          <Input
+                            {...register('postalCode')}
+                            placeholder="30-001"
+                            maxLength={6}
+                            className="bg-white border-[#c9b99a] text-[#382110] focus-visible:ring-[#382110]"
+                          />
+                          {errors.postalCode && (
+                            <p className="text-red-500 text-xs">{errors.postalCode.message}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                 <div className="pt-2">
                   <p className="text-xs text-[#c9b99a] mb-4">
-                    To jest symulacja płatności — nie podawaj prawdziwych danych karty.
+                    To jest symulacja płatności - nie podawaj prawdziwych danych karty.
                   </p>
                   <Button
                     type="submit"

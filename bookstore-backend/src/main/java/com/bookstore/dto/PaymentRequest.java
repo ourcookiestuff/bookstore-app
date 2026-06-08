@@ -17,4 +17,13 @@ public class PaymentRequest {
 
     @NotBlank(message = "CVV jest wymagany")
     private String cvv;
+
+    @NotBlank(message = "Ulica jest wymagana")
+    private String street;
+
+    @NotBlank(message = "Miasto jest wymagane")
+    private String city;
+
+    @NotBlank(message = "Kod pocztowy jest wymagany")
+    private String postalCode;
 }

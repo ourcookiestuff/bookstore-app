@@ -43,4 +43,11 @@ public class Order {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
+    private String street;
+    
+    private String city;
+
+    @Column(name = "postal_code")
+    private String postalCode;
 }

@@ -63,6 +63,9 @@ public class OrderService {
                 .user(user)
                 .status(OrderStatus.PENDING)
                 .total(total)
+                .street(paymentRequest.getStreet())
+                .city(paymentRequest.getCity())
+                .postalCode(paymentRequest.getPostalCode())
                 .build();
         order = orderRepository.save(order);
 
