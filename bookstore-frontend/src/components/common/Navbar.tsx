@@ -45,7 +45,7 @@ export default function Navbar() {
         {/* Desktop menu */}
         <div className="hidden sm:flex items-center gap-6">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/catalog')}
             className="text-[#7a6248] text-sm cursor-pointer hover:text-[#382110] transition-colors bg-transparent border-none"
           >
             Katalog
