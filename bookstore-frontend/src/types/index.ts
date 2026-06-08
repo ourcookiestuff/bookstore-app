@@ -50,3 +50,19 @@ export interface OrderResponse {
   createdAt: string;
   items: OrderItemResponse[];
 }
+
+export type ShelfStatus = 'TO_READ' | 'READING' | 'READ';
+
+export interface ShelfEntryResponse {
+  id: number;
+  bookId: number;
+  title: string;
+  author: string;
+  coverImageUrl: string;
+  pages: number;
+  status: ShelfStatus;
+  currentPage: number;
+  rating: number | null;
+  review: string | null;
+  updatedAt: string;
+}

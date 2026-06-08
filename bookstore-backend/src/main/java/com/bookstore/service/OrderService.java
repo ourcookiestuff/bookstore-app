@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.bookstore.repository.ShelfEntryRepository;
+import com.bookstore.model.ShelfEntry;
+import com.bookstore.model.ShelfStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +24,7 @@ public class OrderService {
     private final CartItemRepository cartItemRepository;
     private final PaymentTransactionRepository paymentTransactionRepository;
     private final UserRepository userRepository;
+    private final ShelfEntryRepository shelfEntryRepository;
 
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -92,6 +96,18 @@ public class OrderService {
         if (paymentSuccess) {
             savedOrder.setStatus(OrderStatus.PAID);
             cartItemRepository.deleteByUser(user);
+
+            for (OrderItem item : orderItems) {
+                shelfEntryRepository.findByUserAndBookId(user, item.getBook().getId())
+                        .orElseGet(() -> shelfEntryRepository.save(
+                                ShelfEntry.builder()
+                                        .user(user)
+                                        .book(item.getBook())
+                                        .status(ShelfStatus.TO_READ)
+                                        .currentPage(0)
+                                        .build()
+                        ));
+            }
         } else {
             savedOrder.setStatus(OrderStatus.CANCELLED);
             throw new RuntimeException("Płatność nie powiodła się. Spróbuj ponownie.");

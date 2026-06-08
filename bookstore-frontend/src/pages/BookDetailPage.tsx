@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { addToCart } from '../api/cartApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Footer from '../components/common/Footer';
+import { addToShelf } from '../api/shelfApi';
 
 export default function BookDetailPage() {
   const { id } = useParams();
@@ -17,6 +18,11 @@ export default function BookDetailPage() {
   const cartMutation = useMutation({
     mutationFn: () => addToCart(book!.id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+  });
+
+  const shelfMutation = useMutation({
+    mutationFn: () => addToShelf(book!.id, { status: 'TO_READ' }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['shelf'] }),
   });
 
   const { data: book, isLoading } = useQuery({
@@ -136,6 +142,14 @@ export default function BookDetailPage() {
                 className="bg-[#382110] hover:bg-[#5c3d1e] text-[#f4f1ea] cursor-pointer px-8"
               >
                 {cartMutation.isPending ? 'Dodawanie...' : 'Do koszyka'}
+              </Button>
+              <Button
+                onClick={() => shelfMutation.mutate()}
+                disabled={shelfMutation.isPending}
+                variant="outline"
+                className="border-[#c9b99a] text-[#382110] hover:bg-[#e8d5b7] cursor-pointer px-8"
+              >
+                {shelfMutation.isPending ? 'Dodawanie...' : '+ Dodaj do półki'}
               </Button>
             </div>
           </div>

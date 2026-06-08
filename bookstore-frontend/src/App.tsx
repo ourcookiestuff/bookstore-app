@@ -6,6 +6,7 @@ import BookDetailPage from './pages/BookDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
+import ShelfPage from './pages/ShelfPage';
 import { useAuthStore } from './store/authStore';
 
 const queryClient = new QueryClient();
@@ -44,6 +45,11 @@ export default function App() {
           <Route path="/orders/:id" element={
             <ProtectedRoute>
               <OrderConfirmationPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/shelf" element={
+            <ProtectedRoute>
+              <ShelfPage />
             </ProtectedRoute>
           } />
         </Routes>
