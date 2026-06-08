@@ -16,7 +16,7 @@ export default function Navbar() {
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <nav className="bg-[#faf8f6] h-14 px-6 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-[#f4f1ea] border-b shadow-sm h-14 px-6 flex items-center justify-between">
       <div
         onClick={() => navigate('/')}
         className="text-[#212121] text-lg font-medium cursor-pointer hover:text-[#e8d5b7] transition-colors"
