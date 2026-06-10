@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getBook } from '../api/bookApi';
+import { getBook, getReviews } from '../api/bookApi';
 import Navbar from '../components/common/Navbar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,12 +8,21 @@ import { addToCart } from '../api/cartApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Footer from '../components/common/Footer';
 import { addToShelf } from '../api/shelfApi';
+import { useState } from 'react';
 
 export default function BookDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [reviewPage, setReviewPage] = useState(0);
 
   const queryClient = useQueryClient();
+
+  const { data: reviewsData } = useQuery({
+    queryKey: ['reviews', id, reviewPage],
+    queryFn: () => getReviews(Number(id), reviewPage),
+  });
+
+const reviews = reviewsData?.content ?? [];
 
   const cartMutation = useMutation({
     mutationFn: () => addToCart(book!.id),
@@ -29,6 +38,40 @@ export default function BookDetailPage() {
     queryKey: ['book', id],
     queryFn: () => getBook(Number(id)),
   });
+
+  function StarDisplay({ rating, count }: { rating: number | null; count: number }) {
+    const stars = rating ?? 0;
+    return (
+      <div className="flex items-center gap-2">
+        <div className="flex gap-0.5">
+          {[1, 2, 3, 4, 5].map((star) => {
+            const filled = stars >= star;
+            const half = !filled && stars >= star - 0.5;
+            return (
+              <span
+                key={star}
+                className={`text-xl leading-none ${
+                  filled ? 'text-[#c9945a]' : half ? 'text-[#c9945a]' : 'text-[#c9b99a]'
+                }`}
+              >
+                {filled ? '★' : half ? '⯨' : '☆'}
+              </span>
+            );
+          })}
+        </div>
+        {rating !== null && (
+          <span className="text-lg font-medium text-[#382110]">
+            {rating.toFixed(2)}
+          </span>
+        )}
+        {count > 0 && (
+          <span className="text-sm text-[#7a6248]">
+            ({count} {count === 1 ? 'ocena' : count < 5 ? 'oceny' : 'ocen'})
+          </span>
+        )}
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -93,6 +136,14 @@ export default function BookDetailPage() {
               {book.author}
             </p>
 
+            {/* Oceny */}
+            <div className="mt-3 space-y-1 leading-tight text-center md:text-left">
+              <StarDisplay rating={book.averageRating} count={book.ratingsCount} />
+              <p className="text-sm text-[#7a6248]">
+                  {book.reviewsCount} {book.reviewsCount === 0 ? 'recenzji' : book.reviewsCount === 1 ? 'recenzja' : book.reviewsCount < 5 ? 'recenzje' : 'recenzji'}
+              </p>
+            </div>
+
             {/* Szczegóły */}
             <div className="flex gap-6 mt-4 text-base text-[#7a6248] border-t border-[#c9b99a] pt-4 flex-wrap justify-center md:justify-start">
               {book.isbn && (
@@ -155,6 +206,82 @@ export default function BookDetailPage() {
           </div>
         </div>
       </div>
+      {/* Recenzje */}
+      {(reviews.length > 0 || reviewsData) && (
+        <div className="max-w-6xl mx-auto px-6 pb-12">
+          <h2 className="text-lg font-medium text-[#382110] mb-4">
+            Recenzje ({reviewsData?.totalElements ?? 0})
+          </h2>
+
+          {reviews.length === 0 ? (
+            <p className="text-sm text-[#c9b99a]">Brak recenzji — bądź pierwszy!</p>
+          ) : (
+            <>
+              <div className="space-y-4 mb-6">
+                {reviews.map((review, i) => (
+                  <div key={i} className="bg-white border border-[#c9b99a] rounded-lg p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-[#382110] text-[#f4f1ea] flex items-center justify-center text-sm font-medium">
+                          {review.email[0].toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-[#382110]">
+                            {review.email.split('@')[0]}
+                          </p>
+                          <p className="text-xs text-[#c9b99a]">
+                            {new Date(review.updatedAt).toLocaleDateString('pl-PL', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                      {review.rating && (
+                        <div className="flex gap-0.5">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                              key={star}
+                              className={`text-sm ${star <= review.rating! ? 'text-[#c9945a]' : 'text-[#c9b99a]'}`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-sm text-[#382110] leading-relaxed">{review.review}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Paginacja recenzji */}
+              {reviewsData && reviewsData.totalPages > 1 && (
+                <div className="flex justify-center items-center gap-3">
+                  <button
+                    onClick={() => setReviewPage((p) => p - 1)}
+                    disabled={reviewsData.first}
+                    className="px-4 py-2 border border-[#c9b99a] rounded bg-white text-sm text-[#382110] hover:bg-[#e8d5b7] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  >
+                    Poprzednie
+                  </button>
+                  <span className="text-sm text-[#7a6248]">
+                    {reviewPage + 1} / {reviewsData.totalPages}
+                  </span>
+                  <button
+                    onClick={() => setReviewPage((p) => p + 1)}
+                    disabled={reviewsData.last}
+                    className="px-4 py-2 border border-[#c9b99a] rounded bg-white text-sm text-[#382110] hover:bg-[#e8d5b7] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  >
+                    Następne
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
       <Footer />
     </div>
   );

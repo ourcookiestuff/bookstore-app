@@ -19,6 +19,9 @@ public class BookResponse {
     private Integer pages;
     private Integer stock;
     private LocalDateTime createdAt;
+    private Double averageRating;
+    private Long ratingsCount;
+    private Long reviewsCount;
 
     public static BookResponse from(Book book) {
         BookResponse response = new BookResponse();

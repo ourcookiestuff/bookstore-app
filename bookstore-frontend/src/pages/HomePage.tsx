@@ -70,6 +70,7 @@ export default function HomePage() {
                     <img
                       src={book.coverImageUrl}
                       alt={book.title}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                     />

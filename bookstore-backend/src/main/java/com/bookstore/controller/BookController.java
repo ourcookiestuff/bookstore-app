@@ -2,6 +2,7 @@ package com.bookstore.controller;
 
 import com.bookstore.dto.BookRequest;
 import com.bookstore.dto.BookResponse;
+import com.bookstore.dto.ReviewResponse;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +54,13 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<Page<ReviewResponse>> getReviews(
+            @PathVariable Long id,
+            @PageableDefault(size = 5) Pageable pageable
+    ) {
+        return ResponseEntity.ok(bookService.getReviews(id, pageable));
     }
 }

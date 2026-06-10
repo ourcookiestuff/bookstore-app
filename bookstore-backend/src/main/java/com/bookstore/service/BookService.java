@@ -2,6 +2,7 @@ package com.bookstore.service;
 
 import com.bookstore.dto.BookRequest;
 import com.bookstore.dto.BookResponse;
+import com.bookstore.dto.ReviewResponse;
 import com.bookstore.model.Book;
 import com.bookstore.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,15 @@ public class BookService {
 
     public BookResponse getBook(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Książka nie istnieje"));
-        return BookResponse.from(book);
+        BookResponse response = BookResponse.from(book);
+        response.setAverageRating(bookRepository.findAverageRatingByBookId(id));
+        response.setRatingsCount(bookRepository.findRatingsCountByBookId(id));
+        response.setReviewsCount(bookRepository.findReviewsCountByBookId(id));
+        return response;
+    }
+
+    public Page<ReviewResponse> getReviews(Long bookId, Pageable pageable) {
+        return bookRepository.findReviewsByBookId(bookId, pageable).map(ReviewResponse::from);
     }
 
     public BookResponse createBook(BookRequest request) {

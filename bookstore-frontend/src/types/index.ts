@@ -10,6 +10,9 @@ export interface BookResponse {
   pages: number;
   stock: number;
   createdAt: string;
+  averageRating: number | null;
+  ratingsCount: number;
+  reviewsCount: number;
 }
 
 export interface Page<T> {
@@ -64,5 +67,12 @@ export interface ShelfEntryResponse {
   currentPage: number;
   rating: number | null;
   review: string | null;
+  updatedAt: string;
+}
+
+export interface ReviewResponse {
+  email: string;
+  rating: number | null;
+  review: string;
   updatedAt: string;
 }
