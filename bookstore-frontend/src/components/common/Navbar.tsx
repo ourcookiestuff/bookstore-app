@@ -80,37 +80,46 @@ export default function Navbar() {
           </div>
 
           {/* Avatar z dropdownem */}
-          {token && <div className="relative" ref={profileRef}>
-            <div
-              onClick={() => setProfileOpen((p) => !p)}
-              className="w-8 h-8 rounded-full bg-[#382110] text-[#f4f1ea] flex items-center justify-center cursor-pointer text-sm font-medium hover:bg-[#5c3d1e] transition-colors select-none"
-            >
-              {initial}
-            </div>
-
-            {profileOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-[#c9b99a] rounded-lg shadow-md overflow-hidden z-50">
-                <div className="px-4 py-3 border-b border-[#c9b99a]">
-                  <p className="text-xs text-[#7a6248]">Zalogowany jako</p>
-                  <p className="text-sm font-medium text-[#382110] truncate">{email}</p>
-                </div>
-                <button
-                  onClick={() => { setProfileOpen(false); navigate('/shelf'); }}
-                  className="w-full text-left px-4 py-2.5 text-sm text-[#382110] hover:bg-[#f4f1ea] transition-colors cursor-pointer"
-                >
-                  Moja półka
-                </button>
-                <div className="border-t border-[#c9b99a]">
-                  <button
-                    onClick={() => { logout(); navigate('/auth'); }}
-                    className="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-[#f4f1ea] transition-colors cursor-pointer"
-                  >
-                    Wyloguj
-                  </button>
-                </div>
+          {token ? (
+            <div className="relative" ref={profileRef}>
+              <div
+                onClick={() => setProfileOpen((p) => !p)}
+                className="w-8 h-8 rounded-full bg-[#382110] text-[#f4f1ea] flex items-center justify-center cursor-pointer text-sm font-medium hover:bg-[#5c3d1e] transition-colors select-none"
+              >
+                {initial}
               </div>
-            )}
-          </div>}
+
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-[#c9b99a] rounded-lg shadow-md overflow-hidden z-50">
+                  <div className="px-4 py-3 border-b border-[#c9b99a]">
+                    <p className="text-xs text-[#7a6248]">Zalogowany jako</p>
+                    <p className="text-sm font-medium text-[#382110] truncate">{email}</p>
+                  </div>
+                  <button
+                    onClick={() => { setProfileOpen(false); navigate('/shelf'); }}
+                    className="w-full text-left px-4 py-2.5 text-sm text-[#382110] hover:bg-[#f4f1ea] transition-colors cursor-pointer"
+                  >
+                    Moja półka
+                  </button>
+                  <div className="border-t border-[#c9b99a]">
+                    <button
+                      onClick={() => { logout(); navigate('/auth'); }}
+                      className="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-[#f4f1ea] transition-colors cursor-pointer"
+                    >
+                      Wyloguj
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate('/auth')}
+              className="px-4 py-1.5 bg-[#382110] text-[#f4f1ea] text-sm rounded hover:bg-[#5c3d1e] transition-colors cursor-pointer border-none"
+            >
+              Zaloguj się
+            </button>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -131,9 +140,16 @@ export default function Navbar() {
       {menuOpen && (
         <div className="sm:hidden bg-white border-t border-[#c9b99a] px-6 py-4 flex flex-col gap-3">
           <button onClick={() => { navigate('/'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Katalog</button>
-          <button onClick={() => { navigate('/shelf'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Moja półka</button>
-          <button onClick={() => { navigate('/cart'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Koszyk {cartCount > 0 && `(${cartCount})`}</button>
-          <button onClick={() => { logout(); navigate('/auth'); }} className="text-left text-sm text-red-500 cursor-pointer bg-transparent border-none">Wyloguj</button>
+          {token && (
+            <>
+              <button onClick={() => { navigate('/shelf'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Moja półka</button>
+              <button onClick={() => { navigate('/cart'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Koszyk {cartCount > 0 && `(${cartCount})`}</button>
+              <button onClick={() => { logout(); navigate('/auth'); }} className="text-left text-sm text-red-500 cursor-pointer bg-transparent border-none">Wyloguj</button>
+            </>
+          )}
+          {!token && (
+            <button onClick={() => { navigate('/auth'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none font-medium">Zaloguj się</button>
+          )}
         </div>
       )}
     </nav>

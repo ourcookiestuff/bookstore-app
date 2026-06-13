@@ -46,7 +46,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f1ea]">
+    <div className="min-h-screen bg-[#f4f1ea] flex flex-col">
       <Navbar />
       <div className="max-w-4xl mx-auto px-6 py-10">
 

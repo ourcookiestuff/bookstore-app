@@ -22,7 +22,7 @@ export default function CatalogPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['books', search, genre, page],
-    queryFn: () => getBooks({ search, genre, page, size: 12 }),
+    queryFn: () => getBooks({ search, genre, page, size: 15 }),
   });
 
   return (
@@ -133,7 +133,7 @@ export default function CatalogPage() {
               
               {/* Lista książek */}
               {isLoading ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
                   {Array.from({ length: 10 }).map((_, i) => (
                     <div key={i} className="animate-pulse">
                       <div className="w-full aspect-[2/3] bg-[#e8d5b7] rounded-lg" />
@@ -146,7 +146,7 @@ export default function CatalogPage() {
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
                     {data?.content.map((book) => (
                       <BookCard key={book.id} book={book} />
                     ))}

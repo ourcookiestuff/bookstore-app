@@ -24,7 +24,7 @@ public class BookController {
     public ResponseEntity<Page<BookResponse>> getBooks(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String genre,
-            @PageableDefault(size = 12) Pageable pageable
+            @PageableDefault(size = 15) Pageable pageable
     ) {
         return ResponseEntity.ok(bookService.getBooks(search, genre, pageable));
     }
