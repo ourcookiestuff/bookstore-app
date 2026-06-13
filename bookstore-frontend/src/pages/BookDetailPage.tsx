@@ -214,7 +214,7 @@ const reviews = reviewsData?.content ?? [];
           </h2>
 
           {reviews.length === 0 ? (
-            <p className="text-sm text-[#c9b99a]">Brak recenzji — bądź pierwszy!</p>
+            <p className="text-sm text-[#c9b99a]">Brak recenzji - bądź pierwszy!</p>
           ) : (
             <>
               <div className="space-y-4 mb-6">

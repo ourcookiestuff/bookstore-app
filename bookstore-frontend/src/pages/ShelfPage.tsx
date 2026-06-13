@@ -23,10 +23,6 @@ export default function ShelfPage() {
     queryFn: () => getShelf(activeTab === 'ALL' ? undefined : activeTab),
   });
 
-  const counts = {
-    ALL: entries.length,
-  };
-
   return (
     <div className="min-h-screen bg-[#f4f1ea] flex flex-col">
     <Navbar />
