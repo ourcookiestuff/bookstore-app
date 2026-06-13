@@ -43,10 +43,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-6xl max-w-full px-6 py-12">
 
         {/* Najnowsze książki */}
-        <div className="mb-12">
+        <div className="mb-12 max-w-full min-w-9">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-xl font-medium text-[#382110]">Najnowsze książki</h2>
             <button
@@ -58,7 +58,7 @@ export default function HomePage() {
           </div>
 
           {/* Poziomy scroll */}
-          <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-hide">
+          <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-hide max-w-full">
             {books.map((book) => (
               <div
                 key={book.id}
@@ -93,7 +93,7 @@ export default function HomePage() {
             {
               icon: '📚',
               title: 'Bogaty katalog',
-              desc: 'Książki z różnych gatunków — fantasy, sci-fi, klasyka i wiele więcej.',
+              desc: 'Książki z różnych gatunków - fantasy, sci-fi, klasyka i wiele więcej.',
               action: () => navigate('/catalog'),
               label: 'Przeglądaj',
             },
@@ -118,7 +118,7 @@ export default function HomePage() {
             >
               <div className="text-3xl mb-3">{f.icon}</div>
               <h3 className="font-medium text-[#382110] mb-2">{f.title}</h3>
-              <p className="text-sm text-[#7a6248] leading-relaxed mb-4">{f.desc}</p>
+              <p className="text-sm text-[#7a6248] leading-relaxed">{f.desc}</p>
               <button
                 onClick={f.action}
                 className="text-sm text-[#382110] underline cursor-pointer bg-transparent border-none hover:text-[#5c3d1e] transition-colors"

@@ -93,12 +93,6 @@ export default function Navbar() {
                   <p className="text-sm font-medium text-[#382110] truncate">{email}</p>
                 </div>
                 <button
-                  onClick={() => { setProfileOpen(false); navigate('/orders'); }}
-                  className="w-full text-left px-4 py-2.5 text-sm text-[#382110] hover:bg-[#f4f1ea] transition-colors cursor-pointer"
-                >
-                  Moje zamówienia
-                </button>
-                <button
                   onClick={() => { setProfileOpen(false); navigate('/shelf'); }}
                   className="w-full text-left px-4 py-2.5 text-sm text-[#382110] hover:bg-[#f4f1ea] transition-colors cursor-pointer"
                 >

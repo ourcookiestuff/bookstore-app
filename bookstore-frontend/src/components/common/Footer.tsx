@@ -40,12 +40,6 @@ export default function Footer() {
               >
                 Koszyk
               </button>
-              <button
-                onClick={() => navigate('/orders')}
-                className="text-sm text-left text-[#c9b99a] hover:text-[#f4f1ea] transition-colors cursor-pointer bg-transparent border-none"
-              >
-                Moje zamówienia
-              </button>
             </div>
           </div>
 
