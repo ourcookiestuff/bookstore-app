@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import ShelfPage from './pages/ShelfPage';
+import AdminPage from './pages/AdminPage';
 import { useAuthStore } from './store/authStore';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -22,9 +23,13 @@ function ScrollToTop() {
 
 const queryClient = new QueryClient();
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+function ProtectedRoute({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) {
   const token = useAuthStore((s) => s.token);
-  return token ? <>{children}</> : <Navigate to="/auth" />;
+  const role = useAuthStore((s) => s.role);
+
+  if (!token) return <Navigate to="/auth" />;
+  if (adminOnly && role !== 'ADMIN') return <Navigate to="/" />;
+  return <>{children}</>;
 }
 
 export default function App() {
@@ -40,6 +45,11 @@ export default function App() {
           <Route path="/books/:id" element={<BookDetailPage />} />
 
           {/* Chronione */}
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          } />
           <Route path="/cart" element={
             <ProtectedRoute>
               <CartPage />

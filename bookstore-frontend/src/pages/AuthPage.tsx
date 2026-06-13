@@ -24,6 +24,7 @@ export default function AuthPage() {
   const setToken = useAuthStore((s) => s.setToken);
   const setEmail = useAuthStore((s) => s.setEmail);
   const navigate = useNavigate();
+  const setRole = useAuthStore((s) => s.setRole);
 
   const { register: formRegister, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -37,6 +38,7 @@ export default function AuthPage() {
         : await register(data);
       setToken(response.token);
       setEmail(data.email);
+      setRole(response.role);
       navigate('/');
     } catch (e: any) {
       setError(e.response?.data?.message || 'Coś poszło nie tak');

@@ -12,6 +12,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const role = useAuthStore((s) => s.role);
 
   const { data: cartItems = [] } = useQuery({
     queryKey: ['cart'],
@@ -52,6 +53,14 @@ export default function Navbar() {
           >
             Katalog
           </button>
+          {role === 'ADMIN' && (
+            <button
+              onClick={() => { setProfileOpen(false); navigate('/admin'); }}
+              className="text-[#7a6248] text-sm cursor-pointer hover:text-[#382110] transition-colors bg-transparent border-none"
+            >
+              Panel admina
+            </button>
+          )}
           <button
             onClick={() => navigate('/shelf')}
             className="text-[#7a6248] text-sm cursor-pointer hover:text-[#382110] transition-colors bg-transparent border-none"

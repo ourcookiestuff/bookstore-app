@@ -8,9 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.bookstore.repository.ShelfEntryRepository;
-import com.bookstore.model.ShelfEntry;
-import com.bookstore.model.ShelfStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,6 +22,7 @@ public class OrderService {
     private final PaymentTransactionRepository paymentTransactionRepository;
     private final UserRepository userRepository;
     private final ShelfEntryRepository shelfEntryRepository;
+    private final BookRepository bookRepository;
 
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -95,8 +93,15 @@ public class OrderService {
 
         if (paymentSuccess) {
             savedOrder.setStatus(OrderStatus.PAID);
-            cartItemRepository.deleteByUser(user);
 
+            for (CartItem cartItem : cartItems) {
+                Book book = cartItem.getBook();
+                book.setStock(Math.max(0, book.getStock() - cartItem.getQuantity()));
+                bookRepository.save(book);
+            }
+
+            cartItemRepository.deleteByUser(user);
+            
             for (OrderItem item : orderItems) {
                 shelfEntryRepository.findByUserAndBookId(user, item.getBook().getId())
                         .orElseGet(() -> shelfEntryRepository.save(

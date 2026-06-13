@@ -4,8 +4,10 @@ import { persist } from 'zustand/middleware';
 interface AuthState {
   token: string | null;
   email: string | null;
+  role: string | null;
   setToken: (token: string) => void;
   setEmail: (email: string) => void;
+  setRole: (role: string) => void;
   logout: () => void;
 }
 
@@ -14,12 +16,12 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       token: null,
       email: null,
+      role: null,
       setToken: (token) => set({ token }),
       setEmail: (email) => set({ email }),
-      logout: () => set({ token: null, email: null }),
+      setRole: (role) => set({ role }),
+      logout: () => set({ token: null, email: null, role: null }),
     }),
-    {
-      name: 'auth-storage',
-    }
+    { name: 'auth-storage' }
   )
 );

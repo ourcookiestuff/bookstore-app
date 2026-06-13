@@ -40,29 +40,28 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedBooks() {
         List<Object[]> books = List.of(
-            new Object[]{"Hobbit", "J.R.R. Tolkien", "Przygoda Bilba Bagginsa w świecie Śródziemia.", new BigDecimal("34.99"), "https://covers.openlibrary.org/b/isbn/9780261102217-L.jpg", "9780261102217", "Fantasy", 310, 20},
-            new Object[]{"Władca Pierścieni: Drużyna Pierścienia", "J.R.R. Tolkien", "Pierwsza część epickiej trylogii.", new BigDecimal("49.99"), "https://covers.openlibrary.org/b/isbn/9780261103573-L.jpg", "9780261103573", "Fantasy", 423, 15},
-            new Object[]{"Nowe Szaty Cesarza", "Andrzej Sapkowski", "Kolejna część sagi o Wiedźminie.", new BigDecimal("39.99"), "https://covers.openlibrary.org/b/isbn/9788373198029-L.jpg", "9788373198029", "Fantasy", 352, 12},
-            new Object[]{"Diuna: Mesjasz", "Frank Herbert", "Druga część sagi Diuny.", new BigDecimal("44.99"), "https://covers.openlibrary.org/b/isbn/9780441172696-L.jpg", "9780441172696", "Science Fiction", 256, 8},
-            new Object[]{"Rok 1984", "George Orwell", "Dystopia o totalitarnym państwie.", new BigDecimal("29.99"), "https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg", "9780451524936", "Dystopia", 328, 18},
-            new Object[]{"Nowy wspaniały świat", "Aldous Huxley", "Wizja przyszłości gdzie ludzie są warunkowani.", new BigDecimal("32.99"), "https://covers.openlibrary.org/b/isbn/9780060850524-L.jpg", "9780060850524", "Dystopia", 311, 14},
-            new Object[]{"Mistrz i Małgorzata", "Michaił Bułhakow", "Satyra na sowieckie społeczeństwo.", new BigDecimal("38.99"), "https://covers.openlibrary.org/b/isbn/9788308060469-L.jpg", "9788308060469", "Klasyka", 480, 10},
-            new Object[]{"Zbrodnia i kara", "Fiodor Dostojewski", "Powieść psychologiczna o zbrodni.", new BigDecimal("34.99"), "https://covers.openlibrary.org/b/isbn/9788308060445-L.jpg", "9788308060446", "Klasyka", 640, 9},
-            new Object[]{"Sto lat samotności", "Gabriel García Márquez", "Magiczny realizm w Ameryce Łacińskiej.", new BigDecimal("42.99"), "https://covers.openlibrary.org/b/isbn/9780060883287-L.jpg", "9780060883287", "Klasyka", 417, 11},
-            new Object[]{"Proces", "Franz Kafka", "Absurdalna historia człowieka oskarżonego o nieznane przestępstwo.", new BigDecimal("27.99"), "https://covers.openlibrary.org/b/isbn/9780805209990-L.jpg", "9780805209990", "Klasyka", 255, 13},
-            new Object[]{"Foundation", "Isaac Asimov", "Upadek galaktycznego imperium.", new BigDecimal("44.99"), "https://covers.openlibrary.org/b/isbn/9780553293357-L.jpg", "9780553293357", "Science Fiction", 244, 16},
-            new Object[]{"Hyperion", "Dan Simmons", "Epicka science fiction w świecie przyszłości.", new BigDecimal("49.99"), "https://covers.openlibrary.org/b/isbn/9780553283686-L.jpg", "9780553283686", "Science Fiction", 482, 7},
-            new Object[]{"Neuromancer", "William Gibson", "Klasyka cyberpunku.", new BigDecimal("36.99"), "https://covers.openlibrary.org/b/isbn/9780441569595-L.jpg", "9780441569595", "Science Fiction", 271, 10},
+            new Object[]{"Hobbit", "J.R.R. Tolkien", "Przygoda Bilba Bagginsa w świecie Śródziemia.", new BigDecimal("34.99"), null, "9780261102217", "Fantasy", 310, 20},
+            new Object[]{"Władca Pierścieni: Drużyna Pierścienia", "J.R.R. Tolkien", "Pierwsza część epickiej trylogii.", new BigDecimal("49.99"), null, "9780261103573", "Fantasy", 423, 15},
+            new Object[]{"Nowe Szaty Cesarza", "Andrzej Sapkowski", "Kolejna część sagi o Wiedźminie.", new BigDecimal("39.99"), null, "9788373198029", "Fantasy", 352, 12},
+            new Object[]{"Diuna: Mesjasz", "Frank Herbert", "Druga część sagi Diuny.", new BigDecimal("44.99"), null, "9780441172696", "Science Fiction", 256, 8},
+            new Object[]{"Nowy wspaniały świat", "Aldous Huxley", "Wizja przyszłości gdzie ludzie są warunkowani.", new BigDecimal("32.99"), null, "9780060850524", "Dystopia", 311, 14},
+            new Object[]{"Mistrz i Małgorzata", "Michaił Bułhakow", "Satyra na sowieckie społeczeństwo.", new BigDecimal("38.99"), null, "9788308060469", "Klasyka", 480, 10},
+            new Object[]{"Zbrodnia i kara", "Fiodor Dostojewski", "Powieść psychologiczna o zbrodni.", new BigDecimal("34.99"), null, "9788308060446", "Klasyka", 640, 9},
+            new Object[]{"Sto lat samotności", "Gabriel García Márquez", "Magiczny realizm w Ameryce Łacińskiej.", new BigDecimal("42.99"), null, "9780060883287", "Klasyka", 417, 11},
+            new Object[]{"Proces", "Franz Kafka", "Absurdalna historia człowieka oskarżonego o nieznane przestępstwo.", new BigDecimal("27.99"), null, "9780805209990", "Klasyka", 255, 13},
+            new Object[]{"Foundation", "Isaac Asimov", "Upadek galaktycznego imperium.", new BigDecimal("44.99"), null, "9780553293357", "Science Fiction", 244, 16},
+            new Object[]{"Hyperion", "Dan Simmons", "Epicka science fiction w świecie przyszłości.", new BigDecimal("49.99"), null, "9780553283686", "Science Fiction", 482, 7},
+            new Object[]{"Neuromancer", "William Gibson", "Klasyka cyberpunku.", new BigDecimal("36.99"), null, "9780441569595", "Science Fiction", 271, 10},
             new Object[]{"Zbrodnia Czarnego Rycerza", "Andrzej Pilipiuk", "Polska fantasy historyczna.", new BigDecimal("32.99"), null, "9788375742410", "Fantasy", 312, 15},
-            new Object[]{"Metro 2033", "Dmitry Glukhovsky", "Postapokaliptyczna Moskwa.", new BigDecimal("37.99"), "https://covers.openlibrary.org/b/isbn/9788374692908-L.jpg", "9788374692908", "Science Fiction", 458, 12},
-            new Object[]{"Wiedźmin: Miecz Przeznaczenia", "Andrzej Sapkowski", "Drugi zbiór opowiadań o Geralcie.", new BigDecimal("39.99"), "https://covers.openlibrary.org/b/isbn/9788373198012-L.jpg", "9788373198012", "Fantasy", 352, 18},
-            new Object[]{"Władca Pierścieni: Dwie Wieże", "J.R.R. Tolkien", "Druga część trylogii.", new BigDecimal("49.99"), "https://covers.openlibrary.org/b/isbn/9780261102361-L.jpg", "9780261102361", "Fantasy", 352, 14},
-            new Object[]{"Władca Pierścieni: Powrót Króla", "J.R.R. Tolkien", "Finał epickiej trylogii.", new BigDecimal("49.99"), "https://covers.openlibrary.org/b/isbn/9780261102378-L.jpg", "9780261102378", "Fantasy", 416, 14},
+            new Object[]{"Metro 2033", "Dmitry Glukhovsky", "Postapokaliptyczna Moskwa.", new BigDecimal("37.99"), null, "9788374692908", "Science Fiction", 458, 12},
+            new Object[]{"Wiedźmin: Miecz Przeznaczenia", "Andrzej Sapkowski", "Drugi zbiór opowiadań o Geralcie.", new BigDecimal("39.99"), null, "9788373198012", "Fantasy", 352, 18},
+            new Object[]{"Władca Pierścieni: Dwie Wieże", "J.R.R. Tolkien", "Druga część trylogii.", new BigDecimal("49.99"), null, "9780261102361", "Fantasy", 352, 14},
+            new Object[]{"Władca Pierścieni: Powrót Króla", "J.R.R. Tolkien", "Finał epickiej trylogii.", new BigDecimal("49.99"), null, "9780261102378", "Fantasy", 416, 14},
             new Object[]{"Czarownice z Lochaber", "Terry Pratchett", "Komediowa fantasy ze Świata Dysku.", new BigDecimal("33.99"), null, "9788375742527", "Fantasy", 284, 11},
             new Object[]{"Atlasówka", "Ayn Rand", "Filozoficzna powieść o kapitalizmie.", new BigDecimal("54.99"), null, "9780452011878", "Klasyka", 1168, 6},
-            new Object[]{"Wiedźmin: Ostatnie życzenie", "Andrzej Sapkowski", "Zbiór opowiadań o wiedźminie Geralcie z Rivii.", new BigDecimal("39.99"), "https://covers.openlibrary.org/b/isbn/9788375780635-L.jpg", "9788375780635", "Fantasy", 288, 15},
-            new Object[]{"Pan Tadeusz", "Adam Mickiewicz", "Epopeja narodowa, arcydzieło polskiej literatury romantycznej.", new BigDecimal("24.99"), "https://covers.openlibrary.org/b/isbn/9788307004525-L.jpg", "9788307004525", "Klasyka", 384, 20},
-            new Object[]{"Harry Potter i Kamień Filozoficzny", "J.K. Rowling", "Pierwsza część przygód młodego czarodzieja Harry'ego Pottera.", new BigDecimal("39.99"), "https://covers.openlibrary.org/b/isbn/8372780110-L.jpg", "8372780110", "Fantasy", 328, 25}
+            new Object[]{"Wiedźmin: Ostatnie życzenie", "Andrzej Sapkowski", "Zbiór opowiadań o wiedźminie Geralcie z Rivii.", new BigDecimal("39.99"), null, "9788375780635", "Fantasy", 288, 15},
+            new Object[]{"Pan Tadeusz", "Adam Mickiewicz", "Epopeja narodowa, arcydzieło polskiej literatury romantycznej.", new BigDecimal("24.99"), null, "9788307004525", "Klasyka", 384, 20},
+            new Object[]{"Harry Potter i Kamień Filozoficzny", "J.K. Rowling", "Pierwsza część przygód młodego czarodzieja Harry'ego Pottera.", new BigDecimal("39.99"), null, "8372780110", "Fantasy", 328, 25}
         );
 
         int added = 0;

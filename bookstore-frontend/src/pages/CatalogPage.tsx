@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getBooks } from '../api/bookApi';
 import BookCard from '../components/books/BookCard';
@@ -12,13 +11,27 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import Footer from '../components/common/Footer';
+import { useSearchParams } from 'react-router-dom';
 
 const GENRES = ['Fantasy', 'Science Fiction', 'Klasyka', 'Dystopia'];
 
 export default function CatalogPage() {
-  const [search, setSearch] = useState('');
-  const [genre, setGenre] = useState('');
-  const [page, setPage] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get('search') ?? '';
+  const genre = searchParams.get('genre') ?? '';
+  const page = Number(searchParams.get('page') ?? 0);
+
+  const setSearch = (value: string) => {
+    setSearchParams(p => { p.set('search', value); p.set('page', '0'); return p; });
+  };
+
+  const setGenre = (value: string) => {
+    setSearchParams(p => { p.set('genre', value); p.set('page', '0'); return p; });
+  };
+
+  const setPage = (value: number) => {
+    setSearchParams(p => { p.set('page', String(value)); return p; });
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['books', search, genre, page],
@@ -35,33 +48,21 @@ export default function CatalogPage() {
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="bg-white rounded-lg border p-4 sticky top-20">
               <h2 className="font-semibold mb-4">Kategorie</h2>
-
               <div className="flex flex-col gap-2">
                 <button
-                  onClick={() => {
-                    setGenre('');
-                    setPage(0);
-                  }}
+                  onClick={() => setGenre('')}
                   className={`text-left px-3 py-2 rounded ${
-                    genre === ''
-                      ? 'bg-[#382110] text-white'
-                      : 'hover:bg-[#f4f1ea]'
+                    genre === '' ? 'bg-[#382110] text-white' : 'hover:bg-[#f4f1ea]'
                   }`}
                 >
                   Wszystkie
                 </button>
-
                 {GENRES.map((g) => (
                   <button
                     key={g}
-                    onClick={() => {
-                      setGenre(g);
-                      setPage(0);
-                    }}
+                    onClick={() => setGenre(g)}
                     className={`text-left px-3 py-2 rounded ${
-                      genre === g
-                        ? 'bg-[#382110] text-white'
-                        : 'hover:bg-[#f4f1ea]'
+                      genre === g ? 'bg-[#382110] text-white' : 'hover:bg-[#f4f1ea]'
                     }`}
                   >
                     {g}
@@ -78,28 +79,19 @@ export default function CatalogPage() {
                   <AccordionTrigger className="text-2xl font-medium text-[#382110]">
                     Kategorie
                   </AccordionTrigger>
-
                   <AccordionContent>
                     <div className="flex flex-wrap gap-2 pt-2">
-
                       <Button
                         variant={genre === '' ? 'default' : 'outline'}
-                        onClick={() => {
-                          setGenre('');
-                          setPage(0);
-                        }}
+                        onClick={() => setGenre('')}
                       >
                         Wszystkie
                       </Button>
-
                       {GENRES.map((g) => (
                         <Button
                           key={g}
                           variant={genre === g ? 'default' : 'outline'}
-                          onClick={() => {
-                            setGenre(g);
-                            setPage(0);
-                          }}
+                          onClick={() => setGenre(g)}
                         >
                           {g}
                         </Button>
@@ -109,29 +101,23 @@ export default function CatalogPage() {
                 </AccordionItem>
               </Accordion>
             </div>
-            
-            {/* Główna zawartość */}
-            <div className="mb-6">
-              <h1 className="text-2xl font-medium text-[#382110]">
-                Katalog książek
-              </h1>
 
+            <div className="mb-6">
+              <h1 className="text-2xl font-medium text-[#382110]">Katalog książek</h1>
               <p className="text-sm text-[#7a6248] mb-4">
                 {data?.totalElements ?? '...'} książek w naszej bibliotece
               </p>
 
-              {/* Pasek wyszukiwania */}
               <div className="mb-8">
                 <Input
                   type="text"
                   placeholder="Szukaj po tytule lub autorze..."
                   value={search}
-                  onChange={(e) => { setSearch(e.target.value); setPage(0); }}
+                  onChange={(e) => setSearch(e.target.value)}
                   className="flex-1 bg-white border-[#c9b99a] text-[#382110] focus-visible:ring-[#382110] placeholder:text-[#c9b99a]"
                 />
               </div>
-              
-              {/* Lista książek */}
+
               {isLoading ? (
                 <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
                   {Array.from({ length: 10 }).map((_, i) => (
@@ -159,12 +145,11 @@ export default function CatalogPage() {
                     </div>
                   )}
 
-                  
                   {data && data.totalPages > 1 && (
                     <div className="flex justify-center items-center gap-3 mt-10">
                       <Button
                         variant="outline"
-                        onClick={() => setPage((p) => p - 1)}
+                        onClick={() => setPage(page - 1)}
                         disabled={data.first}
                         className="border-[#c9b99a] text-[#382110] hover:bg-[#e8d5b7] cursor-pointer"
                       >
@@ -175,7 +160,7 @@ export default function CatalogPage() {
                       </span>
                       <Button
                         variant="outline"
-                        onClick={() => setPage((p) => p + 1)}
+                        onClick={() => setPage(page + 1)}
                         disabled={data.last}
                         className="border-[#c9b99a] text-[#382110] hover:bg-[#e8d5b7] cursor-pointer"
                       >

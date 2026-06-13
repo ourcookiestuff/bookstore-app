@@ -12,6 +12,7 @@ interface LoginRequest {
 
 interface AuthResponse {
   token: string;
+  role: string;
 }
 
 export const register = async (data: RegisterRequest): Promise<AuthResponse> => {
