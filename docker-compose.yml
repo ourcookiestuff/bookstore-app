@@ -30,5 +30,19 @@ services:
     depends_on:
       - backend
 
+  seeder:
+    build: ./bookstore-backend
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      SPRING_PROFILES_ACTIVE: seed
+    depends_on:
+      - postgres
+    profiles:
+      - seed
+
 volumes:
   postgres_data:

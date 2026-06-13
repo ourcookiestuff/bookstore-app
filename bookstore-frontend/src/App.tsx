@@ -33,22 +33,13 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
+          {/* Publiczne */}
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          } />
-          <Route path="/catalog" element={
-            <ProtectedRoute>
-              <CatalogPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/books/:id" element={
-            <ProtectedRoute>
-              <BookDetailPage />
-            </ProtectedRoute>
-          } />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/books/:id" element={<BookDetailPage />} />
+
+          {/* Chronione */}
           <Route path="/cart" element={
             <ProtectedRoute>
               <CartPage />

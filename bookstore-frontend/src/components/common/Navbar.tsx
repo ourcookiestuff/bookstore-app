@@ -8,6 +8,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const logout = useAuthStore((s) => s.logout);
   const email = useAuthStore((s) => s.email);
+  const token = useAuthStore((s) => s.token);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -15,6 +16,7 @@ export default function Navbar() {
   const { data: cartItems = [] } = useQuery({
     queryKey: ['cart'],
     queryFn: getCart,
+    enabled: !!token,
   });
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -78,7 +80,7 @@ export default function Navbar() {
           </div>
 
           {/* Avatar z dropdownem */}
-          <div className="relative" ref={profileRef}>
+          {token && <div className="relative" ref={profileRef}>
             <div
               onClick={() => setProfileOpen((p) => !p)}
               className="w-8 h-8 rounded-full bg-[#382110] text-[#f4f1ea] flex items-center justify-center cursor-pointer text-sm font-medium hover:bg-[#5c3d1e] transition-colors select-none"
@@ -108,7 +110,7 @@ export default function Navbar() {
                 </div>
               </div>
             )}
-          </div>
+          </div>}
         </div>
 
         {/* Mobile menu button */}
