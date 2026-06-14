@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateShelfEntry, removeFromShelf } from '../../api/shelfApi';
 import type { ShelfEntryResponse, ShelfStatus } from '../../types';
+import { toast } from 'sonner';
 
 const STATUS_LABELS: Record<ShelfStatus, string> = {
   TO_READ: 'Do przeczytania',
@@ -40,12 +41,18 @@ export default function ShelfCard({ entry }: { entry: ShelfEntryResponse }) {
   const updateMutation = useMutation({
     mutationFn: (data: Parameters<typeof updateShelfEntry>[1]) =>
       updateShelfEntry(entry.id, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['shelf'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['shelf'] });
+      toast.success('Zapisano zmiany');
+    },
   });
 
   const removeMutation = useMutation({
     mutationFn: () => removeFromShelf(entry.id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['shelf'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['shelf'] });
+      toast.success('Usunięto z półki');
+    },
   });
 
   const progress = entry.pages && entry.currentPage

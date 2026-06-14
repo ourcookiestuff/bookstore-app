@@ -4,6 +4,7 @@ import { getCart, updateQuantity, removeFromCart, clearCart } from '../api/cartA
 import Navbar from '../components/common/Navbar';
 import { Button } from '@/components/ui/button';
 import Footer from '../components/common/Footer';
+import { toast } from 'sonner';
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -22,12 +23,18 @@ export default function CartPage() {
 
   const removeMutation = useMutation({
     mutationFn: removeFromCart,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Usunięto z koszyka');
+    },
   });
 
   const clearMutation = useMutation({
     mutationFn: clearCart,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Koszyk wyczyszczony');
+    },
   });
 
   const total = items.reduce((sum, item) => sum + item.subtotal, 0);

@@ -100,8 +100,10 @@ export default function HomePage() {
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-10 h-14 bg-[#c9b99a] rounded-sm" />
+                      <div className="w-full h-full flex items-center justify-center bg-[#e8d5b7] p-3">
+                        <p className="text-[#5c3d1e] text-md font-medium text-center leading-tight line-clamp-4">
+                          {book.title}
+                        </p>
                       </div>
                     )}
                   </div>

@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Footer from '../components/common/Footer';
 import { addToShelf } from '../api/shelfApi';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function BookDetailPage() {
   const { id } = useParams();
@@ -26,12 +27,20 @@ const reviews = reviewsData?.content ?? [];
 
   const cartMutation = useMutation({
     mutationFn: () => addToCart(book!.id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Dodano do koszyka!');
+    },
+    onError: () => toast.error('Nie udało się dodać do koszyka'),
   });
 
   const shelfMutation = useMutation({
     mutationFn: () => addToShelf(book!.id, { status: 'TO_READ' }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['shelf'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['shelf'] });
+      toast.success('Dodano do półki!');
+    },
+    onError: () => toast.error('Nie udało się dodać do półki'),
   });
 
   const { data: book, isLoading } = useQuery({

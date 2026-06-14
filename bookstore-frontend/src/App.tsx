@@ -12,6 +12,7 @@ import AdminPage from './pages/AdminPage';
 import { useAuthStore } from './store/authStore';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -72,6 +73,7 @@ export default function App() {
           } />
         </Routes>
       </BrowserRouter>
+      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }

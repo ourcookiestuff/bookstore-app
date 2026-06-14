@@ -3,6 +3,7 @@ import type { BookResponse } from '../../types';
 import { Badge } from '../ui/badge';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addToCart } from '../../api/cartApi';
+import { toast } from 'sonner';
 
 interface Props {
   book: BookResponse;
@@ -15,7 +16,11 @@ export default function BookCard({ book }: Props) {
 
   const cartMutation = useMutation({
     mutationFn: () => addToCart(book.id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Dodano do koszyka!');
+    },
+    onError: () => toast.error('Nie udało się dodać do koszyka'),
   });
 
   return (
@@ -36,8 +41,10 @@ export default function BookCard({ book }: Props) {
             }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-16 h-24 bg-[#c9b99a] rounded-sm" />
+          <div className="w-full h-full flex items-center justify-center bg-[#e8d5b7] p-3">
+            <p className="text-[#5c3d1e] text-lg font-medium text-center leading-tight line-clamp-4">
+              {book.title}
+            </p>
           </div>
         )}
 
