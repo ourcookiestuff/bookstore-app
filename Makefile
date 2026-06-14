@@ -6,7 +6,7 @@ dev:
 	cd bookstore-frontend && npm run dev
 
 seed:
-	docker compose --profile seed run --rm seeder
+	docker compose --profile seed run --rm --build seeder
 
 down:
 	docker compose down

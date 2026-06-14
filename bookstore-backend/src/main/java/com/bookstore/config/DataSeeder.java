@@ -40,15 +40,12 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedBooks() {
         List<Object[]> books = List.of(
-            new Object[]{"Hobbit", "J.R.R. Tolkien", "Przygoda Bilba Bagginsa w świecie Śródziemia.", new BigDecimal("34.99"), null, "9780261102217", "Fantasy", 310, 20},
-            new Object[]{"Władca Pierścieni: Drużyna Pierścienia", "J.R.R. Tolkien", "Pierwsza część epickiej trylogii.", new BigDecimal("49.99"), null, "9780261103573", "Fantasy", 423, 15},
-            new Object[]{"Nowe Szaty Cesarza", "Andrzej Sapkowski", "Kolejna część sagi o Wiedźminie.", new BigDecimal("39.99"), null, "9788373198029", "Fantasy", 352, 12},
-            new Object[]{"Diuna: Mesjasz", "Frank Herbert", "Druga część sagi Diuny.", new BigDecimal("44.99"), null, "9780441172696", "Science Fiction", 256, 8},
-            new Object[]{"Nowy wspaniały świat", "Aldous Huxley", "Wizja przyszłości gdzie ludzie są warunkowani.", new BigDecimal("32.99"), null, "9780060850524", "Dystopia", 311, 14},
-            new Object[]{"Mistrz i Małgorzata", "Michaił Bułhakow", "Satyra na sowieckie społeczeństwo.", new BigDecimal("38.99"), null, "9788308060469", "Klasyka", 480, 10},
-            new Object[]{"Zbrodnia i kara", "Fiodor Dostojewski", "Powieść psychologiczna o zbrodni.", new BigDecimal("34.99"), null, "9788308060446", "Klasyka", 640, 9},
+            new Object[]{"Hobbit", "J.R.R. Tolkien", "Przygoda Bilba Bagginsa w świecie Śródziemia.", new BigDecimal("34.99"), "https://covers.openlibrary.org/b/isbn/9788324129492-L.jpg", "9788324129492", "Fantasy", 310, 20},
+            new Object[]{"Władca Pierścieni: Drużyna Pierścienia", "J.R.R. Tolkien", "Pierwsza część epickiej trylogii.", new BigDecimal("49.99"), "https://covers.openlibrary.org/b/isbn/9788328721906-L.jpg", "9788328721906", "Fantasy", 423, 15},
+            new Object[]{"Mistrz i Małgorzata", "Michaił Bułhakow", "Satyra na sowieckie społeczeństwo.", new BigDecimal("38.99"), "https://covers.openlibrary.org/b/isbn/8371808119-L.jpg", "8371808119", "Klasyka", 480, 10},
+            new Object[]{"Zbrodnia i kara", "Fiodor Dostojewski", "Powieść psychologiczna o zbrodni.", new BigDecimal("34.99"), "https://covers.openlibrary.org/b/isbn/9788373273122-L.jpg", "9788373273122", "Klasyka", 640, 9},
             new Object[]{"Sto lat samotności", "Gabriel García Márquez", "Magiczny realizm w Ameryce Łacińskiej.", new BigDecimal("42.99"), null, "9780060883287", "Klasyka", 417, 11},
-            new Object[]{"Proces", "Franz Kafka", "Absurdalna historia człowieka oskarżonego o nieznane przestępstwo.", new BigDecimal("27.99"), null, "9780805209990", "Klasyka", 255, 13},
+            new Object[]{"Proces", "Franz Kafka", "Absurdalna historia człowieka oskarżonego o nieznane przestępstwo.", new BigDecimal("27.99"), "https://covers.openlibrary.org/b/isbn/9788324711260-L.jpg", "9788324711260", "Klasyka", 255, 13},
             new Object[]{"Foundation", "Isaac Asimov", "Upadek galaktycznego imperium.", new BigDecimal("44.99"), null, "9780553293357", "Science Fiction", 244, 16},
             new Object[]{"Hyperion", "Dan Simmons", "Epicka science fiction w świecie przyszłości.", new BigDecimal("49.99"), null, "9780553283686", "Science Fiction", 482, 7},
             new Object[]{"Neuromancer", "William Gibson", "Klasyka cyberpunku.", new BigDecimal("36.99"), null, "9780441569595", "Science Fiction", 271, 10},
@@ -58,10 +55,7 @@ public class DataSeeder implements CommandLineRunner {
             new Object[]{"Władca Pierścieni: Dwie Wieże", "J.R.R. Tolkien", "Druga część trylogii.", new BigDecimal("49.99"), null, "9780261102361", "Fantasy", 352, 14},
             new Object[]{"Władca Pierścieni: Powrót Króla", "J.R.R. Tolkien", "Finał epickiej trylogii.", new BigDecimal("49.99"), null, "9780261102378", "Fantasy", 416, 14},
             new Object[]{"Czarownice z Lochaber", "Terry Pratchett", "Komediowa fantasy ze Świata Dysku.", new BigDecimal("33.99"), null, "9788375742527", "Fantasy", 284, 11},
-            new Object[]{"Atlasówka", "Ayn Rand", "Filozoficzna powieść o kapitalizmie.", new BigDecimal("54.99"), null, "9780452011878", "Klasyka", 1168, 6},
-            new Object[]{"Wiedźmin: Ostatnie życzenie", "Andrzej Sapkowski", "Zbiór opowiadań o wiedźminie Geralcie z Rivii.", new BigDecimal("39.99"), null, "9788375780635", "Fantasy", 288, 15},
-            new Object[]{"Pan Tadeusz", "Adam Mickiewicz", "Epopeja narodowa, arcydzieło polskiej literatury romantycznej.", new BigDecimal("24.99"), null, "9788307004525", "Klasyka", 384, 20},
-            new Object[]{"Harry Potter i Kamień Filozoficzny", "J.K. Rowling", "Pierwsza część przygód młodego czarodzieja Harry'ego Pottera.", new BigDecimal("39.99"), null, "8372780110", "Fantasy", 328, 25}
+            new Object[]{"Atlasówka", "Ayn Rand", "Filozoficzna powieść o kapitalizmie.", new BigDecimal("54.99"), null, "9780452011878", "Klasyka", 1168, 6}
         );
 
         int added = 0;
@@ -86,6 +80,13 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private List<User> seedUsers() {
+        userRepository.findByEmail("admin@admin.com")
+            .orElseGet(() -> userRepository.save(User.builder()
+                    .email("admin@admin.com")
+                    .password(passwordEncoder.encode("password123"))
+                    .role(Role.ADMIN)
+                    .build()));
+
         String[] emails = {
                 "anna.kowalska@example.com",
                 "jan.nowak@example.com",
@@ -115,7 +116,17 @@ public class DataSeeder implements CommandLineRunner {
                 "Solidna pozycja, choć nie bez wad.",
                 "Absolutny must-read dla fanów gatunku.",
                 "Rozczarowałem się, spodziewałem się więcej.",
-                "Piękny język i świetnie zbudowane postacie."
+                "Piękny język i świetnie zbudowane postacie.",
+                "Jedna z tych książek, do których się wraca.",
+                "Autor świetnie buduje napięcie — nie mogłem odłożyć.",
+                "Trochę zbyt długa jak na ilość treści, ale warta uwagi.",
+                "Postaci są bardzo dobrze napisane, szczególnie główny bohater.",
+                "Zakończenie mnie zaskoczyło — nie spodziewałem się takiego obrotu.",
+                "Czytałem w jeden weekend, wciąga od pierwszej strony.",
+                "Klimat i atmosfera są niesamowite, świat bardzo dobrze zbudowany.",
+                "Nie jest to mój ulubiony gatunek, ale ta książka zmieniła moje zdanie.",
+                "Bardzo emocjonalna lektura, polecam na spokojny wieczór.",
+                "Klasyka z powodu — każde pokolenie powinno ją przeczytać."
         };
 
         ShelfStatus[] statuses = ShelfStatus.values();
@@ -123,7 +134,7 @@ public class DataSeeder implements CommandLineRunner {
         for (User user : users) {
             List<Book> shuffled = new ArrayList<>(books);
             Collections.shuffle(shuffled);
-            int entriesCount = 3 + random.nextInt(5);
+            int entriesCount = 6 + random.nextInt(5);
 
             for (int i = 0; i < Math.min(entriesCount, shuffled.size()); i++) {
                 Book book = shuffled.get(i);
@@ -138,11 +149,14 @@ public class DataSeeder implements CommandLineRunner {
                 Integer currentPage = 0;
 
                 if (status == ShelfStatus.READ) {
-                    rating = 3 + random.nextInt(3);
-                    review = random.nextBoolean() ? reviews[random.nextInt(reviews.length)] : null;
+                    rating = 2 + random.nextInt(4);
+                    review = random.nextInt(10) < 8 ? reviews[random.nextInt(reviews.length)] : null;
                     currentPage = book.getPages() != null ? book.getPages() : 0;
                 } else if (status == ShelfStatus.READING && book.getPages() != null) {
                     currentPage = 1 + random.nextInt(book.getPages());
+                    if (random.nextBoolean()) {
+                        rating = 3 + random.nextInt(3);
+                    }
                 }
 
                 shelfEntryRepository.save(ShelfEntry.builder()
