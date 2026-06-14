@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient';
-import type { ShelfEntryResponse, ShelfStatus } from '../types';
+import type { Page, ShelfEntryResponse, ShelfStatus } from '../types';
 
 interface ShelfEntryRequest {
   status: ShelfStatus;
@@ -8,8 +8,10 @@ interface ShelfEntryRequest {
   review?: string;
 }
 
-export const getShelf = async (status?: ShelfStatus): Promise<ShelfEntryResponse[]> => {
-  const response = await axiosClient.get('/shelf', { params: status ? { status } : {} });
+export const getShelf = async (status?: ShelfStatus, page = 0): Promise<Page<ShelfEntryResponse>> => {
+  const response = await axiosClient.get('/shelf', {
+    params: { ...(status ? { status } : {}), page, size: 10 }
+  });
   return response.data;
 };
 

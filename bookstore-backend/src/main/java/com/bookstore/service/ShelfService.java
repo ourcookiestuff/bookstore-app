@@ -5,10 +5,11 @@ import com.bookstore.dto.ShelfEntryResponse;
 import com.bookstore.model.*;
 import com.bookstore.repository.*;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,12 +25,12 @@ public class ShelfService {
                 .orElseThrow(() -> new RuntimeException("Użytkownik nie znaleziony"));
     }
 
-    public List<ShelfEntryResponse> getShelf(ShelfStatus status) {
+    public Page<ShelfEntryResponse> getShelf(ShelfStatus status, Pageable pageable) {
         User user = getCurrentUser();
-        List<ShelfEntry> entries = status != null
-                ? shelfEntryRepository.findByUserAndStatus(user, status)
-                : shelfEntryRepository.findByUser(user);
-        return entries.stream().map(ShelfEntryResponse::from).toList();
+        Page<ShelfEntry> entries = status != null
+                ? shelfEntryRepository.findByUserAndStatus(user, status, pageable)
+                : shelfEntryRepository.findByUser(user, pageable);
+        return entries.map(ShelfEntryResponse::from);
     }
 
     public ShelfEntryResponse addToShelf(Long bookId, ShelfEntryRequest request) {

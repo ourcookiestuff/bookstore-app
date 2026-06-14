@@ -17,12 +17,15 @@ const STATUS_TABS: ShelfStatus[] = ['TO_READ', 'READING', 'READ'];
 
 export default function ShelfPage() {
   const [activeTab, setActiveTab] = useState<ShelfStatus | 'ALL'>('ALL');
+  const [page, setPage] = useState(0);
 
-  const { data: entries = [], isLoading } = useQuery({
-    queryKey: ['shelf', activeTab],
-    queryFn: () => getShelf(activeTab === 'ALL' ? undefined : activeTab),
+  const { data, isLoading } = useQuery({
+    queryKey: ['shelf', activeTab, page],
+    queryFn: () => getShelf(activeTab === 'ALL' ? undefined : activeTab, page),
   });
 
+  const entries = data?.content ?? [];
+  
   return (
     <div className="min-h-screen bg-[#f4f1ea] flex flex-col">
     <Navbar />
@@ -35,7 +38,7 @@ export default function ShelfPage() {
           {(['ALL', ...STATUS_TABS] as const).map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => { setActiveTab(tab); setPage(0); }}
               className={`px-4 py-1.5 text-sm rounded-full border transition-colors cursor-pointer ${
                 activeTab === tab
                   ? 'bg-[#382110] text-[#f4f1ea] border-[#382110]'
@@ -70,6 +73,27 @@ export default function ShelfPage() {
             {entries.map((entry) => (
               <ShelfCard key={entry.id} entry={entry} />
             ))}
+          </div>
+        )}
+        {data && data.totalPages > 1 && (
+          <div className="flex justify-center items-center gap-3 mt-6">
+            <button
+              onClick={() => setPage((p) => p - 1)}
+              disabled={data.first}
+              className="px-4 py-2 border border-[#c9b99a] rounded bg-white text-sm text-[#382110] hover:bg-[#e8d5b7] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              Poprzednia
+            </button>
+            <span className="text-sm text-[#7a6248]">
+              {page + 1} / {data.totalPages}
+            </span>
+            <button
+              onClick={() => setPage((p) => p + 1)}
+              disabled={data.last}
+              className="px-4 py-2 border border-[#c9b99a] rounded bg-white text-sm text-[#382110] hover:bg-[#e8d5b7] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              Następna
+            </button>
           </div>
         )}
       </div>

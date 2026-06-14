@@ -6,10 +6,12 @@ import com.bookstore.model.ShelfStatus;
 import com.bookstore.service.ShelfService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/shelf")
@@ -19,10 +21,11 @@ public class ShelfController {
     private final ShelfService shelfService;
 
     @GetMapping
-    public ResponseEntity<List<ShelfEntryResponse>> getShelf(
-            @RequestParam(required = false) ShelfStatus status
+    public ResponseEntity<Page<ShelfEntryResponse>> getShelf(
+            @RequestParam(required = false) ShelfStatus status,
+            @PageableDefault(size = 10) Pageable pageable
     ) {
-        return ResponseEntity.ok(shelfService.getShelf(status));
+        return ResponseEntity.ok(shelfService.getShelf(status, pageable));
     }
 
     @PostMapping("/books/{bookId}")
