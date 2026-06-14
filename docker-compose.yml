@@ -9,10 +9,14 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./bookstore-backend
-    restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
       DB_USERNAME: ${DB_USERNAME}
@@ -21,7 +25,8 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
   
   frontend:
     build: ./bookstore-frontend
@@ -32,7 +37,6 @@ services:
 
   seeder:
     build: ./bookstore-backend
-    restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
       DB_USERNAME: ${DB_USERNAME}
@@ -40,7 +44,8 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       SPRING_PROFILES_ACTIVE: seed
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     profiles:
       - seed
 
