@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCart } from '../../api/cartApi';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const logout = useAuthStore((s) => s.logout);
+  const queryClient = useQueryClient();
   const email = useAuthStore((s) => s.email);
   const token = useAuthStore((s) => s.token);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -112,7 +113,7 @@ export default function Navbar() {
                   </button>
                   <div className="border-t border-[#c9b99a]">
                     <button
-                      onClick={() => { logout(); navigate('/auth'); }}
+                      onClick={() => { logout(); queryClient.clear(); navigate('/auth'); }}
                       className="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-[#f4f1ea] transition-colors cursor-pointer"
                     >
                       Wyloguj
@@ -153,7 +154,7 @@ export default function Navbar() {
             <>
               <button onClick={() => { navigate('/shelf'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Moja półka</button>
               <button onClick={() => { navigate('/cart'); setMenuOpen(false); }} className="text-left text-sm text-[#382110] cursor-pointer bg-transparent border-none">Koszyk {cartCount > 0 && `(${cartCount})`}</button>
-              <button onClick={() => { logout(); navigate('/auth'); }} className="text-left text-sm text-red-500 cursor-pointer bg-transparent border-none">Wyloguj</button>
+              <button onClick={() => { logout(); queryClient.clear(); navigate('/auth'); }} className="text-left text-sm text-red-500 cursor-pointer bg-transparent border-none">Wyloguj</button>
             </>
           )}
           {!token && (

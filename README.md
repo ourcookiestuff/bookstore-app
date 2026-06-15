@@ -1,5 +1,7 @@
 # Bookstore
 
+BookStore to aplikacja łącząca księgarnię internetową z osobistą biblioteką. Uzytkownik przegląda katalog, kupuje ksiązki przez symulowany checkout z płatnością kartą, a po zakupie ksiązki trafiają automatycznie na jego półkę, gdzie śledzi postęp czytania i pisze recenzje.
+
 ## Uruchomienie
 
 Aby uruchomić aplikację, należy w głównym folderze projektu wykonać komendę:

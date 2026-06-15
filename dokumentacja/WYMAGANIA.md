@@ -5,7 +5,7 @@
 | **ID** | **Wymaganie** | **Opis realizacji** | **Status** |
 | ------ | ------------- | ------------------- | ---------- |
 | **R1** | **Backend API** | REST API z zasobami: User, Book, CartItem, Order, OrderItem, ShelfEntry, PaymentTransaction - 7 zasobów powiązanych relacjami, wystawione przez Spring Boot 3 | ✓ |
-| **R2** | **Baza danych** | PostgreSQL 16 z przemyślanym schematem relacyjnym. Migracje zarządzane przez Flyway, wykonywane automatycznie przy starcie aplikacji | ✓ |
+| **R2** | **Baza danych** | PostgreSQL 16. Migracje zarządzane przez Flyway, wykonywane automatycznie przy starcie aplikacji | ✓ |
 | **R3** | **Frontend** | SPA zbudowane w React 19 + TypeScript, komunikujące się z API przez Axios. Routing po stronie klienta przez React Router, UI przez shadcn/ui + Tailwind CSS | ✓ |
 | **R4** | **Autentykacja** | JWT podpisany HMAC-SHA256, weryfikowany przez Spring Security przy każdym żądaniu. Rozróżnienie ról USER/ADMIN, ochrona endpointów przez `@PreAuthorize`, publiczne widoki (katalog, strona główna) dostępne bez logowania | ✓ |
 | **R5** | **Konteneryzacja** | `docker compose up --build` uruchamia trzy serwisy: PostgreSQL 16, backend Spring Boot i frontend React serwowany przez nginx. Multi-stage builds redukują rozmiar obrazów | ✓ |
