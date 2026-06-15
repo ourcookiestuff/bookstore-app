@@ -15,4 +15,4 @@ docker compose --profile seed run --rm --build seeder
 
 ## Dokumentacja
 
-Dokumentacja aplikacji znajduje się [tutaj](https://github.com/ourcookiestuff/bookstore-app/blob/main/dokumentacja/README.md)
+Dokumentacja aplikacji znajduje się [tutaj](https://github.com/ourcookiestuff/bookstore-app/tree/main/dokumentacja)
