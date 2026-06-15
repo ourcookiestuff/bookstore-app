@@ -2,11 +2,16 @@
 
 ## Uruchomienie
 
-Aby uruchomić aplikację należy w głównym folderze projektu wykonać komendę:
+Aby uruchomić aplikację, należy w głównym folderze projektu wykonać komendę:
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 Aplikacja będzie dostępna pod adresem: `http://localhost:5173/`
+
+Aby uruchomić seeding po inicjacji nalezy wykonać komendę:
+```bash
+docker compose --profile seed run --rm --build seeder
+```
 
 ## Dokumentacja
 
